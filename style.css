@@ -33,6 +33,118 @@ body{
   overflow-x: hidden;
 }
 
+/*=========================
+      MUSIC PLAYER
+=========================*/
+
+.music-player{
+
+    position:fixed;
+
+    right:18px;
+
+    bottom:18px;
+
+    z-index:9999;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.music-btn{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    padding:0;
+
+}
+
+.vinyl{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(circle,#444 8%,#111 9%,#111 26%,#000 27%,#000 100%);
+
+    position:relative;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+
+}
+
+.vinyl-center{
+
+    width:16px;
+
+    height:16px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    position:absolute;
+
+    left:50%;
+
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+}
+
+.music-text{
+
+    background:white;
+
+    color:#7d2c3d;
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.2);
+
+}
+
+.music-player.playing .vinyl{
+
+    animation:spin 2.5s linear infinite;
+
+}
+
+.music-player.playing .music-text{
+
+    display:none;
+
+}
+
+@keyframes spin{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
 .grain{
   position: fixed; inset:0; pointer-events:none; z-index:1;
   opacity:.03; mix-blend-mode: multiply;
