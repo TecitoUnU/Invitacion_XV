@@ -59,65 +59,48 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // Música de fondo
 // ===============================
 
-// =======================================
-// Música de fondo (Web Audio API)
-// =======================================
+//==================================
+// Música
+//==================================
 
 const bgMusic = document.getElementById("bgMusic");
 
-if (bgMusic) {
+const musicPlayer = document.getElementById("music-player");
 
-    bgMusic.volume = 0.35;
+const musicBtn = document.getElementById("music-btn");
 
-    let started = false;
+bgMusic.volume = 0.35;
 
-    // Crear AudioContext
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    const audioContext = new AudioContextClass();
+bgMusic.preload = "auto";
 
-    // Conectar el <audio> al AudioContext
-    const source = audioContext.createMediaElementSource(bgMusic);
-    source.connect(audioContext.destination);
+async function playMusic(){
 
-    async function startMusic() {
+    try{
 
-        if (started) return;
-        started = true;
+        if(bgMusic.paused){
 
-        try {
-
-            // Desbloquear el AudioContext
-            if (audioContext.state === "suspended") {
-                await audioContext.resume();
-            }
-
-            // Reproducir desde el inicio
             await bgMusic.play();
 
-            // Esperar un momento antes de saltar
-            setTimeout(() => {
-                bgMusic.currentTime = 22;
-            }, 400);
+            bgMusic.currentTime = 22;
 
-        } catch (err) {
-            console.error(err);
+            musicPlayer.classList.add("playing");
+
         }
+
+    }catch(e){
+
+        console.log(e);
 
     }
 
-    [
-        "pointerdown",
-        "touchstart",
-        "click",
-        "scroll",
-        "keydown"
-    ].forEach(evento => {
-
-        document.addEventListener(evento, startMusic, {
-            once: true,
-            passive: true
-        });
-
-    });
-
 }
+
+musicBtn.addEventListener("click",playMusic);
+
+// Intentar automáticamente
+
+window.addEventListener("load",()=>{
+
+    playMusic();
+
+});
