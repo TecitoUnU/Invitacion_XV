@@ -59,12 +59,14 @@ const observer = new IntersectionObserver((entries) => {
 const bgMusic = document.getElementById("bgMusic");
 
 if (bgMusic) {
-    bgMusic.volume = 0.35; // Cambia el volumen si lo deseas
+    bgMusic.volume = 0.35;
 
     const startMusic = () => {
-        bgMusic.play().catch(err => console.log("No se pudo reproducir:", err));
+        // Comenzar desde el segundo 22
+        bgMusic.currentTime = 22;
 
-        // Elimina los eventos para que solo se ejecute una vez
+        bgMusic.play().catch(err => console.log(err));
+
         document.removeEventListener("click", startMusic);
         document.removeEventListener("touchstart", startMusic);
     };
@@ -72,5 +74,4 @@ if (bgMusic) {
     document.addEventListener("click", startMusic);
     document.addEventListener("touchstart", startMusic);
 }
-
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
