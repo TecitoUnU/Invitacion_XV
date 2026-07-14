@@ -59,19 +59,26 @@ const observer = new IntersectionObserver((entries) => {
 const bgMusic = document.getElementById("bgMusic");
 
 if (bgMusic) {
+
     bgMusic.volume = 0.35;
 
-    const startMusic = () => {
-        // Comenzar desde el segundo 22
+    let started = false;
+
+    function startMusic() {
+
+        if (started) return;
+        started = true;
+
         bgMusic.currentTime = 22;
 
-        bgMusic.play().catch(err => console.log(err));
+        bgMusic.play().catch(err => {
+            console.log(err);
+        });
 
-        document.removeEventListener("click", startMusic);
-        document.removeEventListener("touchstart", startMusic);
-    };
+    }
 
-    document.addEventListener("click", startMusic);
-    document.addEventListener("touchstart", startMusic);
+    document.addEventListener("pointerdown", startMusic, { once: true });
+    document.addEventListener("click", startMusic, { once: true });
+
 }
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
