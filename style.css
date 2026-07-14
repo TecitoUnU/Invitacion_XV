@@ -13,6 +13,7 @@
   --ink:        #3C2E33;   /* texto principal */
   --ink-soft:   #6E5B62;   /* texto secundario */
   --card:       #FFFDFC;   /* tarjeta blanca flotando sobre la banda */
+  --wine-deep:  #6E1B2E;   /* vino profundo — tarjeta de itinerario */
 
   --display: 'Italiana', serif;
   --script:  'Bonheur Royale', cursive;
@@ -233,44 +234,76 @@ body{
 .gallery__item{ aspect-ratio: 3/4; min-width:0; border-radius: 3px; overflow:hidden; }
 
 /* ============================================================
-   TIMELINE (banda tipo pergamino sobre foto)
+   ITINERARIO (tarjeta vino en arco + línea vertical de puntos)
    ============================================================ */
-.timeline{
+.itinerary{
   position: relative;
-  min-height: 78vh;
-  display:flex; align-items:center; justify-content:center;
-  overflow:hidden;
+  background: var(--blush);
+  padding: 9vh 6vw 8vh;
+  text-align: center;
+  overflow: hidden;
 }
-.photo--timeline-bg{ position:absolute; inset:0; width:100%; height:100%; }
-.timeline::before{
-  content:''; position:absolute; inset:0;
-  background: rgba(43,30,35,.2); z-index:1;
+.itinerary__card{
+  position: relative;
+  background: var(--wine-deep);
+  color: #fff;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 3.6rem 1.8rem 3.2rem;
+  border-radius: 220px 220px 12px 12px;
+  box-shadow: 0 20px 46px rgba(60,20,30,.22);
 }
-.timeline__banner{
-  position: relative; z-index: 2;
-  background: rgba(140,74,93,.86);
-  backdrop-filter: blur(2px);
-  color:#fff;
-  padding: 3.2rem 2.2rem 4rem;
-  border-radius: 10px 10px 50% 50% / 10px 10px 26% 26%;
-  max-width: 360px;
-  width: 88%;
-  text-align:center;
+.itinerary__title{ margin: 0 0 2.6rem; }
+.itinerary__title .script-line{
+  display:block;
+  font-family: var(--script);
+  font-size: clamp(1.9rem, 6.6vw, 2.5rem);
+  line-height: 1.1;
 }
-.timeline__banner .signature--sm{ color:#fff; margin-bottom: 1.8rem; }
-.timeline__item{
-  display:flex; align-items:center; gap: .8rem;
-  margin: 1.3rem 0; text-align:left;
+.itinerary__title .itinerary__de{
+  display:block;
+  font-family: var(--body);
+  font-size: .68rem;
+  letter-spacing: .42em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.82);
+  margin: .35rem 0;
 }
-.timeline__icon{
-  width: 34px; height: 34px; flex-shrink:0;
-  border: 1px solid rgba(255,255,255,.55); border-radius: 50%;
-  display:flex; align-items:center; justify-content:center;
+
+.itinerary__track{ position: relative; }
+.itinerary__track::before{
+  content:''; position:absolute; top:4px; bottom:4px; left:50%;
+  width:1px; background: rgba(255,255,255,.45); transform: translateX(-50%);
 }
-.timeline__icon svg{ width: 16px; height: 16px; color:#fff; }
-.timeline__text{ font-size: .92rem; letter-spacing:.02em; line-height: 1.5; }
-.timeline__text b{ font-family: var(--display); font-weight:400; letter-spacing:.1em; }
-.timeline__spacer{ flex: 1; }
+.itinerary__row{
+  position: relative;
+  display:flex; align-items:center;
+  min-height: 88px;
+}
+.itinerary__row--reverse{ flex-direction: row-reverse; }
+.itinerary__icon{
+  flex: 1; display:flex; justify-content:flex-end; align-items:center;
+  padding-right: 1.5rem;
+}
+.itinerary__row--reverse .itinerary__icon{ justify-content:flex-start; padding-right:0; padding-left: 1.5rem; }
+.itinerary__icon svg{ width: 30px; height: 30px; color: #fff; }
+.itinerary__label{
+  flex: 1; text-align:left; padding-left: 1.5rem;
+  font-size: .72rem; letter-spacing:.1em; line-height:1.6;
+}
+.itinerary__row--reverse .itinerary__label{ text-align:right; padding-left:0; padding-right: 1.5rem; }
+.itinerary__label b{
+  display:block;
+  font-family: var(--display); font-weight:400;
+  font-size: .8rem; letter-spacing:.16em; text-transform:uppercase;
+  margin-bottom: .2rem;
+}
+.itinerary__dot{
+  position:absolute; left:50%; top:50%;
+  width:9px; height:9px; border-radius:50%;
+  background:#fff; transform: translate(-50%,-50%);
+  box-shadow: 0 0 0 4px var(--wine-deep);
+}
 
 /* ============================================================
    PASES + CUENTA REGRESIVA
@@ -317,6 +350,29 @@ body{
   color: rgba(60,46,51,.75);
 }
 .footer__signature{ font-family: var(--script); font-size: 1.6rem; color: var(--rose-deep); margin-top:.5rem; }
+
+/* ============================================================
+   BOTÓN DE MÚSICA
+   ============================================================ */
+.music-toggle{
+  position: fixed; z-index: 50;
+  right: 1.1rem; bottom: 1.1rem;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(60,46,51,.62);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,.5);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; padding:0;
+}
+.music-toggle__icon{
+  width: 20px; height: 20px; color:#fff;
+  position:absolute; opacity:0; transition: opacity .25s ease;
+}
+.music-toggle__icon--play{ opacity:1; }
+.music-toggle.is-playing .music-toggle__icon--play{ opacity:0; }
+.music-toggle.is-playing .music-toggle__icon--pause{ opacity:1; }
+.music-toggle.is-playing{ animation: music-spin 5s linear infinite; }
+@keyframes music-spin{ to{ transform: rotate(360deg); } }
 
 /* ============================================================
    REVEAL ON SCROLL

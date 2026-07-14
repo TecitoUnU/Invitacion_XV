@@ -1,6 +1,6 @@
 # Invitación digital · Mis XV años
 
-Sitio estático (HTML + CSS + JS), listo para GitHub Pages. Diseño inspirado en invitaciones tipo "wedding site": banda de color con tarjetas flotantes, fotos en arco, florales de línea y un timeline tipo pergamino.
+Sitio estático (HTML + CSS + JS), listo para GitHub Pages. Diseño inspirado en invitaciones tipo "wedding site": banda de color con tarjetas flotantes, fotos en arco, florales de línea, un itinerario tipo tarjeta en arco con línea de tiempo vertical, y música de fondo en bucle.
 
 ## 1. Qué archivos editar
 
@@ -38,7 +38,7 @@ Busca cada `<div class="photo ..." aria-hidden="true"></div>` en `index.html` y 
 ```html
 <img class="photo NOMBRE-DE-CLASE" src="assets/NOMBRE-ARCHIVO.jpg" alt="">
 ```
-(mantén la misma clase que tenía el div, por ejemplo `photo--hero`, `photo--tall`, `photo--arch`, `photo--pair-item`, `photo--timeline-bg`, `gallery__item`).
+(mantén la misma clase que tenía el div, por ejemplo `photo--hero`, `photo--tall`, `photo--arch`, `photo--pair-item`, `gallery__item`).
 
 Lista de fotos que necesitas, en el orden en que aparecen:
 
@@ -47,13 +47,21 @@ Lista de fotos que necesitas, en el orden en que aparecen:
 3. **Misa** (`photo--arch`) — foto que se recorta en forma de arco.
 4. **Recepción** (`photo--arch`) — otra foto en forma de arco.
 5–6. **Pareja de fotos junto a Recepción** (`photo--pair-item` x2) — cuadradas.
-7. **Timeline** (`photo--timeline-bg`) — foto de fondo detrás del itinerario (usa una con buena luz, se oscurece un poco con overlay).
-8. **Sugerencia de regalo** (`photo--tall`) — foto vertical.
-9. **Pases / cuenta regresiva** (`photo--tall`, dentro de `.pases-photo`) — foto vertical (el countdown se sobrepone encima).
-10–11. **Pareja de fotos en RSVP** (`photo--pair-item` x2) — cuadradas.
-12–17. **Galería** (`gallery__item` x6) — cuadro de 6 fotos variadas.
+7. **Sugerencia de regalo** (`photo--tall`) — foto vertical.
+8. **Pases / cuenta regresiva** (`photo--tall`, dentro de `.pases-photo`) — foto vertical (el countdown se sobrepone encima).
+9–10. **Pareja de fotos en RSVP** (`photo--pair-item` x2) — cuadradas.
+11–16. **Galería** (`gallery__item` x6) — cuadro de 6 fotos variadas.
+
+El **itinerario** ahora es una tarjeta de color vino con íconos y ya no lleva foto de fondo.
 
 Sube todas a una carpeta `assets/` en la raíz del repositorio.
+
+### d) La canción de fondo
+El sitio ahora reproduce música en bucle apenas se abre, con un botoncito ⏯️ flotante abajo a la derecha para pausarla o volverla a poner.
+
+1. Sube tu canción (en formato `.mp3`) a `assets/` con el nombre exacto **`musica.mp3`**.
+2. Usa solo música de la que tengas los derechos o licencia (por ejemplo, música libre de regalías), ya que la mayoría de canciones comerciales están protegidas por derechos de autor.
+3. Casi todos los navegadores (sobre todo en celular) bloquean el sonido automático hasta que la persona toca la pantalla — por eso el script intenta reproducirla sola y, si el navegador la bloquea, arranca en cuanto alguien haga el primer clic o toque en cualquier parte de la página.
 
 ## 4. Publicar en GitHub Pages
 
