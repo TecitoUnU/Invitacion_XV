@@ -53,4 +53,24 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.15 });
 
+// ===============================
+// Música de fondo
+// ===============================
+const bgMusic = document.getElementById("bgMusic");
+
+if (bgMusic) {
+    bgMusic.volume = 0.35; // Cambia el volumen si lo deseas
+
+    const startMusic = () => {
+        bgMusic.play().catch(err => console.log("No se pudo reproducir:", err));
+
+        // Elimina los eventos para que solo se ejecute una vez
+        document.removeEventListener("click", startMusic);
+        document.removeEventListener("touchstart", startMusic);
+    };
+
+    document.addEventListener("click", startMusic);
+    document.addEventListener("touchstart", startMusic);
+}
+
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
