@@ -55,4 +55,67 @@ const observer = new IntersectionObserver((entries) => {
 { once:true });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+// =======================================
+// Música de fondo (Web Audio API)
+// =======================================
+
+const bgMusic = document.getElementById("bgMusic");
+
+if (bgMusic) {
+
+    bgMusic.volume = 0.35;
+
+    let started = false;
+
+    // Crear AudioContext
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    const audioContext = new AudioContextClass();
+
+    // Conectar el <audio> al AudioContext
+    const source = audioContext.createMediaElementSource(bgMusic);
+    source.connect(audioContext.destination);
+
+    async function startMusic() {
+
+        if (started) return;
+        started = true;
+
+        try {
+
+            // Desbloquear el AudioContext
+            if (audioContext.state === "suspended") {
+                await audioContext.resume();
+            }
+
+            // Reproducir desde el inicio
+            await bgMusic.play();
+
+            // Esperar un momento antes de saltar
+            setTimeout(() => {
+                bgMusic.currentTime = 22;
+            }, 400);
+
+        } catch (err) {
+            console.error(err);
+        }
+
+    }
+
+    [
+        "pointerdown",
+        "touchstart",
+        "click",
+        "scroll",
+        "keydown"
+    ].forEach(evento => {
+
+        document.addEventListener(evento, startMusic, {
+            once: true,
+            passive: true
+        });
+
+    });
+
+}
+
 
