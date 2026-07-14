@@ -59,6 +59,10 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // Música de fondo
 // ===============================
 
+// =======================================
+// Música de fondo (Web Audio API)
+// =======================================
+
 const bgMusic = document.getElementById("bgMusic");
 
 if (bgMusic) {
@@ -67,6 +71,14 @@ if (bgMusic) {
 
     let started = false;
 
+    // Crear AudioContext
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    const audioContext = new AudioContextClass();
+
+    // Conectar el <audio> al AudioContext
+    const source = audioContext.createMediaElementSource(bgMusic);
+    source.connect(audioContext.destination);
+
     async function startMusic() {
 
         if (started) return;
@@ -74,23 +86,38 @@ if (bgMusic) {
 
         try {
 
+            // Desbloquear el AudioContext
+            if (audioContext.state === "suspended") {
+                await audioContext.resume();
+            }
+
+            // Reproducir desde el inicio
             await bgMusic.play();
 
-            // Esperar a que empiece y luego saltar al segundo 22
+            // Esperar un momento antes de saltar
             setTimeout(() => {
                 bgMusic.currentTime = 22;
-            }, 300);
+            }, 400);
 
         } catch (err) {
-            console.log("Error reproduciendo:", err);
+            console.error(err);
         }
 
     }
 
-    // Primer toque
-    document.addEventListener("pointerdown", startMusic, { once: true });
+    [
+        "pointerdown",
+        "touchstart",
+        "click",
+        "scroll",
+        "keydown"
+    ].forEach(evento => {
 
-    // Por si el usuario hace scroll primero
-    window.addEventListener("scroll", startMusic, { once: true });
+        document.addEventListener(evento, startMusic, {
+            once: true,
+            passive: true
+        });
+
+    });
 
 }
