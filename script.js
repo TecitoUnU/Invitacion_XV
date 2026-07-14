@@ -56,28 +56,17 @@ const observer = new IntersectionObserver((entries) => {
 // ===============================
 // Música de fondo
 // ===============================
-const bgMusic = document.getElementById("bgMusic");
+let started = false;
 
-if (bgMusic) {
+window.addEventListener("scroll", () => {
 
-    bgMusic.volume = 0.35;
+    if(started) return;
 
-    let started = false;
+    started = true;
 
-    function startMusic() {
+    bgMusic.currentTime = 22;
 
-        if (started) return;
-        started = true;
+    bgMusic.play().catch(()=>{});
 
-        bgMusic.play();
-        bgMusic.play().catch(err => {
-            console.log(err);
-        });
-
-    }
-
-    document.addEventListener("pointerdown", startMusic, { once: true });
-    document.addEventListener("click", startMusic, { once: true });
-
-}
+}, { once:true });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
