@@ -52,21 +52,45 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.15 });
+{ once:true });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // ===============================
 // Música de fondo
 // ===============================
-let started = false;
 
-window.addEventListener("scroll", () => {
+const bgMusic = document.getElementById("bgMusic");
 
-    if(started) return;
+if (bgMusic) {
 
-    started = true;
+    bgMusic.volume = 0.35;
 
-    bgMusic.currentTime = 22;
+    let started = false;
 
-    bgMusic.play().catch(()=>{});
+    async function startMusic() {
 
-}, { once:true });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        if (started) return;
+        started = true;
+
+        try {
+
+            await bgMusic.play();
+
+            // Esperar a que empiece y luego saltar al segundo 22
+            setTimeout(() => {
+                bgMusic.currentTime = 22;
+            }, 300);
+
+        } catch (err) {
+            console.log("Error reproduciendo:", err);
+        }
+
+    }
+
+    // Primer toque
+    document.addEventListener("pointerdown", startMusic, { once: true });
+
+    // Por si el usuario hace scroll primero
+    window.addEventListener("scroll", startMusic, { once: true });
+
+}
