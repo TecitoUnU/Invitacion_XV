@@ -3,7 +3,7 @@
 // ============================================================
 const EVENT_DATE = new Date('2026-09-26T16:00:00-06:00'); // año-mes-diaTHH:mm:ss (zona GT)
 
-const WHATSAPP_NUMBER = '50212345678'; // EDITABLE: tu número con código de país, sin +
+const WHATSAPP_NUMBER = '50248468099'; // EDITABLE: tu número con código de país, sin +
 const WHATSAPP_MESSAGE = '¡Hola! Confirmo mi asistencia a los XV años de Valeria. Vamos ___ persona(s). 💗';
 
 // ------------------------------------------------------------
