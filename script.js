@@ -40,59 +40,9 @@ if (rsvpBtn) {
 }
 
 // ------------------------------------------------------------
-// Música de fondo (en bucle)
-// ------------------------------------------------------------
-// EDITABLE: sube tu canción como assets/musica.mp3 (mismo nombre exacto)
-const bgMusic = document.getElementById('bg-music');
-const musicToggle = document.getElementById('music-toggle');
-
-function setMusicButtonState(isPlaying){
-  if (!musicToggle) return;
-  musicToggle.classList.toggle('is-playing', isPlaying);
-  musicToggle.setAttribute('aria-pressed', String(isPlaying));
-  musicToggle.setAttribute('aria-label', isPlaying ? 'Pausar música' : 'Reproducir música');
-}
-
-function playMusic(){
-  if (!bgMusic) return;
-  bgMusic.volume = 0.55;
-  const playPromise = bgMusic.play();
-  if (playPromise !== undefined) {
-    playPromise.then(() => setMusicButtonState(true)).catch(() => setMusicButtonState(false));
-  }
-}
-
-if (bgMusic) {
-  // La mayoría de navegadores bloquean el autoplay con sonido: intentamos
-  // reproducir de inmediato y, si el navegador lo bloquea, arrancamos en
-  // cuanto la persona toque o haga clic en cualquier parte de la página.
-  playMusic();
-
-  const startOnFirstInteraction = () => {
-    if (bgMusic.paused) playMusic();
-    document.removeEventListener('click', startOnFirstInteraction);
-    document.removeEventListener('touchstart', startOnFirstInteraction);
-  };
-  document.addEventListener('click', startOnFirstInteraction, { once: true });
-  document.addEventListener('touchstart', startOnFirstInteraction, { once: true });
-}
-
-if (musicToggle) {
-  musicToggle.addEventListener('click', () => {
-    if (!bgMusic) return;
-    if (bgMusic.paused) {
-      playMusic();
-    } else {
-      bgMusic.pause();
-      setMusicButtonState(false);
-    }
-  });
-}
-
-// ------------------------------------------------------------
 // Reveal on scroll
 // ------------------------------------------------------------
-document.querySelectorAll('.block, .itinerary').forEach(el => el.classList.add('reveal'));
+document.querySelectorAll('.block, .timeline').forEach(el => el.classList.add('reveal'));
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
