@@ -69,8 +69,7 @@ if (bgMusic) {
         if (started) return;
         started = true;
 
-        bgMusic.currentTime = 22;
-
+        bgMusic.play();
         bgMusic.play().catch(err => {
             console.log(err);
         });
