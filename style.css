@@ -577,6 +577,21 @@ body{
 }
 
 /* ============================================================
+   HOSPEDAJE SUGERIDO
+   ============================================================ */
+.hospedaje__intro{
+  font-family: var(--serif-i); font-style: italic;
+  color: #fff; text-align:center; line-height: 1.75;
+  max-width: 440px; margin: 0 auto 2.2rem; font-size: 1rem;
+}
+.hotel__icon{
+  width: 58px; height: 58px; margin: 0 auto 1.1rem;
+  border: 1px solid var(--rose); border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+}
+.hotel__icon svg{ width: 27px; height: 27px; color: var(--rose-deep); }
+
+/* ============================================================
    RSVP
    ============================================================ */
 .btn-solid{
