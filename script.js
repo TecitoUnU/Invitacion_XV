@@ -81,13 +81,16 @@ if (bgMusic) {
  
         try {
  
-            // Desbloquear el AudioContext
+            // Reproducir de inmediato, dentro del mismo gesto del usuario
+            // (esto debe ir ANTES de cualquier await, o Safari/iOS lo bloquea)
+            const playPromise = bgMusic.play();
+ 
+            // Reanudar el AudioContext en paralelo, no antes de play()
             if (audioContext.state === "suspended") {
-                await audioContext.resume();
+                audioContext.resume();
             }
  
-            // Reproducir desde el inicio
-            await bgMusic.play();
+            await playPromise;
  
             // Esperar un momento antes de saltar
             setTimeout(() => {
