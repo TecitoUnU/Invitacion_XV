@@ -2,26 +2,26 @@
 // EDITABLE: fecha del evento y datos de WhatsApp
 // ============================================================
 const EVENT_DATE = new Date('2026-09-26T16:00:00-06:00'); // año-mes-diaTHH:mm:ss (zona GT)
-
+ 
 const WHATSAPP_NUMBER = '50248468099'; // EDITABLE: tu número con código de país, sin +
 const WHATSAPP_MESSAGE = '¡Hola! Confirmo mi asistencia a los XV años de Valeria. Vamos ___ persona(s). 💗';
-
+ 
 // ------------------------------------------------------------
 // Countdown
 // ------------------------------------------------------------
 function updateCountdown(){
   const now = new Date();
   let diff = EVENT_DATE - now;
-
+ 
   if (diff < 0) diff = 0;
-
+ 
   const dias  = Math.floor(diff / (1000 * 60 * 60 * 24));
   const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const min   = Math.floor((diff / (1000 * 60)) % 60);
   const seg   = Math.floor((diff / 1000) % 60);
-
+ 
   const pad = n => String(n).padStart(2, '0');
-
+ 
   document.getElementById('cd-dias').textContent  = pad(dias);
   document.getElementById('cd-horas').textContent = pad(horas);
   document.getElementById('cd-min').textContent   = pad(min);
@@ -29,7 +29,7 @@ function updateCountdown(){
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
+ 
 // ------------------------------------------------------------
 // Botón de WhatsApp
 // ------------------------------------------------------------
@@ -38,12 +38,12 @@ if (rsvpBtn) {
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
   rsvpBtn.setAttribute('href', url);
 }
-
+ 
 // ------------------------------------------------------------
 // Reveal on scroll
 // ------------------------------------------------------------
 document.querySelectorAll('.block, .timeline').forEach(el => el.classList.add('reveal'));
-
+ 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -52,55 +52,54 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.15 });
-{ once:true });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
+ 
 // =======================================
 // Música de fondo (Web Audio API)
 // =======================================
-
+ 
 const bgMusic = document.getElementById("bgMusic");
-
+ 
 if (bgMusic) {
-
+ 
     bgMusic.volume = 0.35;
-
+ 
     let started = false;
-
+ 
     // Crear AudioContext
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     const audioContext = new AudioContextClass();
-
+ 
     // Conectar el <audio> al AudioContext
     const source = audioContext.createMediaElementSource(bgMusic);
     source.connect(audioContext.destination);
-
+ 
     async function startMusic() {
-
+ 
         if (started) return;
         started = true;
-
+ 
         try {
-
+ 
             // Desbloquear el AudioContext
             if (audioContext.state === "suspended") {
                 await audioContext.resume();
             }
-
+ 
             // Reproducir desde el inicio
             await bgMusic.play();
-
+ 
             // Esperar un momento antes de saltar
             setTimeout(() => {
                 bgMusic.currentTime = 22;
             }, 400);
-
+ 
         } catch (err) {
             console.error(err);
         }
-
+ 
     }
-
+ 
     [
         "pointerdown",
         "touchstart",
@@ -108,14 +107,12 @@ if (bgMusic) {
         "scroll",
         "keydown"
     ].forEach(evento => {
-
+ 
         document.addEventListener(evento, startMusic, {
             once: true,
             passive: true
         });
-
+ 
     });
-
+ 
 }
-
-
